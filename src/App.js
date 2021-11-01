@@ -17,12 +17,14 @@ import "./style2.css";
 // the route in this example. A similar convention
 // is used for matching dynamic segments in other
 // popular web frameworks like Rails and Express.
-export default () => {
+const App= (props) => {
   return(
     // <ParamsExample/>
-    <NestingExample/>
+    <NestingExample info={props.info}/>
   )
 }
+
+export default App;
 
 const ParamsExample = () => {
   return (
@@ -70,7 +72,7 @@ function Child() {
 //---------------------------------------------------
 
 
-const NestingExample = () => {
+const NestingExample = (props) => {
   return (
     <Router>
       <div>
@@ -82,7 +84,7 @@ const NestingExample = () => {
               <Home />
             </Route>
             <Route path="/topics">
-              <Topics />
+              <Topics info={props.info} />
             </Route>
             <Route path={['*','topics/*']}>
               <NoMatch />
@@ -115,7 +117,7 @@ function Home() {
   );
 }
 
-function Topics() {
+function Topics(props) {
   // The `path` lets us build <Route> paths that are
   // relative to the parent route, while the `url` lets
   // us build relative links.
@@ -125,39 +127,40 @@ function Topics() {
     <div>
       <h2>Topics</h2>
       <ul>
-        <li>
-          <Link to={`${url}/rendering`}>Rendering with React</Link>
-        </li>
-        <li>
-          <Link to={`${url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${url}/props-v-state`}>Props v. State</Link>
-        </li>
+        {props.info.map(x => (
+          <li key={x.id}>
+            <Link to={`${url}/${x.id}`}>{x.title}</Link>
+          </li>
+        ))}
       </ul>
-
+      
+  
       <Switch>
         <Route exact path={path}>
           <h3>Please select a topic.</h3>
         </Route>
         <Route path={`${path}/:topicId`}>
-          <Topic />
+          <Topic info={props.info}/>
         </Route>
       </Switch>
     </div>
   );
 }
 
-function Topic() {
+function Topic(props) {
   // The <Route> that rendered this component has a
   // path of `/topics/:topicId`. The `:topicId` portion
   // of the URL indicates a placeholder that we can
   // get from `useParams()`.
   let { topicId } = useParams();
 
+
   return (
     <div>
       <h3>{topicId}</h3>
+      {props.info.map(x => (
+        x.id === topicId && x.info
+      ))}
     </div>
   );
 }
