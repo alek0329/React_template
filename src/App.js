@@ -2,6 +2,7 @@ import "./App.css";
 import React from "react";
 import upper, { text1, text2, text3 } from "./file1";
 import obj, { males, females } from "./file2";
+import { Welcome, MultiWelcome, WelcomePerson } from "./file3";
 
 var person = obj;
 const male = males;
@@ -32,6 +33,8 @@ function App() {
       <h2>Ex2</h2>
       <p>{email}</p>
       <p>{firstName}</p>
+      <h2>Ex3</h2>
+      <MultiWelcome />
     </React.Fragment>
   );
 }
