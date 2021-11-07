@@ -14,8 +14,13 @@ function App() {
 
 function Counter(props) {
   const [counter, setCounter] = useState(props.incrementor);
-  localStorage.setItem("count", counter);
-  let storedCount = localStorage.getItem("count");
+
+  if (storedCount < counter) {
+    localStorage.setItem("count", counter);
+    storedCount = localStorage.getItem("count");
+  } else {
+    let storedCount = localStorage.getItem("count");
+  }
   return (
     <div>
       <button
