@@ -1,26 +1,35 @@
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.css";
+import Button from "./components/jokeFetch";
 
-function App() {
+const App = () => {
   const initNum = 5;
+  const [value, setValue] = React.useState("");
+
+  const fetchApi = () => {
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then((res) => res.json)
+      .then((data) => setValue(data.value));
+    console.log(fetchApi);
+  };
   return (
     <div>
-      <button onClick={() => initNum == 5}>Start</button>
       <Counter incrementor={initNum} />
+      {value === "" ? <Button callapi={fetchApi} /> : <p>{value}</p>}
     </div>
   );
-}
+};
 
 function Counter(props) {
   const [counter, setCounter] = useState(props.incrementor);
-
+  let storedCount = 0;
   if (storedCount < counter) {
     localStorage.setItem("count", counter);
     storedCount = localStorage.getItem("count");
-  } else {
-    let storedCount = localStorage.getItem("count");
   }
+  useEffect(() => {
+    document.title = `You clicked ${counter} times`;
+  });
   return (
     <div>
       <button
@@ -40,18 +49,5 @@ function Counter(props) {
     </div>
   );
 }
-
-// function Storager(props) {
-//   localStorage.setItem("count", props.counter);
-//   const storedCount = localStorage.getItem("count");
-//   useEffect(() => {
-//     document.title = `You clicked ${props.counter} times`;
-//   });
-//   return (
-//     <React.Fragment>
-//       <h3>counter: {storedCount}</h3>
-//     </React.Fragment>
-//   );
-// }
 
 export default App;
