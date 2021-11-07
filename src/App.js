@@ -1,17 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import Counter from "./Components";
 import "./App.css";
 
-function App() {
+function App(props) {
+  const [count, setCount] = useState(0);
   return (
     <div className="App">
-      <button onClick={countIncrement}>Click me!</button>
-      <h3>count: {countIncrement.count}</h3>
+      <Counter />
     </div>
   );
 }
 
-function countIncrement() {
-  const count = 0;
-  console.log(count);
-}
 export default App;
