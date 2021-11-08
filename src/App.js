@@ -1,21 +1,29 @@
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
-import Button from "./components/jokeFetch";
 
 const App = () => {
   const initNum = 5;
-  const [value, setValue] = React.useState("");
+  const [joke, setJoke] = useState();
 
   const fetchApi = () => {
     fetch("https://api.chucknorris.io/jokes/random")
-      .then((res) => res.json)
-      .then((data) => setValue(data.value));
-    console.log(fetchApi);
+      .then((res) => res.json())
+      .then((data) => {
+        setJoke(data.value);
+        console.log(joke);
+      });
   };
   return (
     <div>
       <Counter incrementor={initNum} />
-      {value === "" ? <Button callapi={fetchApi} /> : <p>{value}</p>}
+      <button
+        onClick={() => {
+          return fetchApi();
+        }}
+      >
+        Click me!
+      </button>
+      <h2>{joke}</h2>
     </div>
   );
 };
