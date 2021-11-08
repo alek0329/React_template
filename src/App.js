@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import "./App.css";
+import MemberDemo from "./ListDemo";
 
 const App = () => {
   const initNum = 5;
@@ -38,6 +39,7 @@ const App = () => {
       </button>
       <h2>{joke}</h2>
       <h2>{autoJoke}</h2>
+      <MemberDemo />
     </div>
   );
 };
@@ -54,6 +56,8 @@ function Counter(props) {
   });
   return (
     <div>
+      <h3>StoredCounter: {storedCount}</h3>
+      <h3>Counter: {counter}</h3>
       <button
         className="btn-sm btn-success m-2"
         onClick={() => setCounter(counter + props.incrementor)}
@@ -66,8 +70,6 @@ function Counter(props) {
       >
         -
       </button>
-      <h3>StoredCounter: {storedCount}</h3>
-      <h3>Counter: {counter}</h3>
     </div>
   );
 }
