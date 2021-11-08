@@ -4,7 +4,7 @@ import "./App.css";
 const App = () => {
   const initNum = 5;
   const [joke, setJoke] = useState();
-
+  const [autoJoke, setAutoJoke] = useState();
   const fetchApi = () => {
     fetch("https://api.chucknorris.io/jokes/random")
       .then((res) => res.json())
@@ -13,6 +13,19 @@ const App = () => {
         console.log(joke);
       });
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetch("https://icanhazdadjoke.com/", {
+        headers: { Accept: "application/json" },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAutoJoke(data.joke);
+          clearInterval(intervalId);
+        });
+    }, 10000);
+  });
   return (
     <div>
       <Counter incrementor={initNum} />
@@ -24,6 +37,7 @@ const App = () => {
         Click me!
       </button>
       <h2>{joke}</h2>
+      <h2>{autoJoke}</h2>
     </div>
   );
 };
